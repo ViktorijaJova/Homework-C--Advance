@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Reflection.PortableExecutable;
 using System.Runtime.Intrinsics.X86;
 
 namespace Homework._05.advcSharp.App
@@ -48,16 +49,25 @@ namespace Homework._05.advcSharp.App
 
             //npt working
 
-            var whiteDogs = DataBase.people
-                .FindAll(person => person.Dogs.Count > 1)
-               
-                .Select(person => person.Dogs.Find(dog => dog.Color == "White")).ToList();
-            //whiteDogs.PrintEntities();
-                 
+          /*  var whiteDogs = DataBase.people
+                .FindAll(person => person.Dogs.Contains(Dogs => Dogs.Color == "White"))
+                .Select(person => person.Dogs.Find(dog => dog.Color == "White"))
+                .OrderByDescending(dog => dog.Name)
+                .ToList();
+            whiteDogs.PrintEntities();*/
 
+         
 
-          
+            var listofnames = new List<string>() { "Cristofer", "Freddy", "Erin", "Amelia" };
 
+            var dognames = DataBase.people
+               .Where(person => listofnames.Contains(person.FirstName))
+               .SelectMany(x => x.Dogs)
+               .Where(x => x.Color == "White")
+               .Select(x => x.Name)
+               .ToList();
+
+           
 
          
 

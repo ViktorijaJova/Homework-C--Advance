@@ -103,7 +103,7 @@ namespace TimeTrackingApp
 							if (choice == 3)
 							{
 								_userService.SeeStatistics(_currentuser);
-								Thread.Sleep(2000);
+								Thread.Sleep(5000);
 								Console.Clear();
 							}
 						

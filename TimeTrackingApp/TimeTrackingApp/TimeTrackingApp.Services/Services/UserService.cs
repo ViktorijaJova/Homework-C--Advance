@@ -107,6 +107,7 @@ namespace TimeTrackingApp.Services.Services
             { 
                 activity.PrintInfo();
             }
+              
         }
     }
 }

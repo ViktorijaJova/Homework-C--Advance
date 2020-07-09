@@ -9,7 +9,7 @@ using TrackingTimeApp.Domain.Interfaces;
 
 namespace TrackingTimeApp.Domain
 {
-	public class Db<T> where T:User
+	public class Db<T>:IDb<T> where T:User
 	{
 		private List<T> _db;
 

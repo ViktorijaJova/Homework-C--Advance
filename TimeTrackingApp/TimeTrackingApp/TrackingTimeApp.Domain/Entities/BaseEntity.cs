@@ -15,7 +15,7 @@ namespace TrackingTimeApp.Domain.Entities
         public DateTime StartTimer { get; set; }
 
         public DateTime StopTimer { get; set; }
-
+/*
         public Reading Reading { get; set; }
 
         public Watching Watching { get; set; }
@@ -25,8 +25,10 @@ namespace TrackingTimeApp.Domain.Entities
 
         public OtherHobbies OtherHobbies { get; set; }
 
-
+*/
         public ActivityType ActivityType { get; set; }
+
+        
 
 
         public void TrackTimeSpendDoingActivity()
@@ -45,6 +47,7 @@ namespace TrackingTimeApp.Domain.Entities
                 StopTimer = DateTime.Now;
                 TRackedTime = StopTimer - StartTimer;
                 Console.WriteLine($" You have been doing your activity for {TRackedTime.TotalSeconds} seconds");
+                
 
             }
             else
@@ -53,6 +56,9 @@ namespace TrackingTimeApp.Domain.Entities
             }
         }
         public abstract void PrintInfo();
+
+        public abstract void GetHours();
+       
      
     }
 }

@@ -18,21 +18,36 @@ namespace TimeTrackingApp.Services.Services
             _db = new Db<T>();
         }
 
-        public void ChangeInfo(int id, string firstName, string lastName)
+        public void ChangeFirstName(int id, string firstName)
         {
             T user = _db.GetUserbyId(id);
-            if (Validation.ValidateString(firstName) == null
-                || Validation.ValidateString(lastName) == null)
+            if (Validation.ValidateString(firstName) == null)
             {
-                Console.WriteLine("[Error] strings were not valid. Please try again!", ConsoleColor.Red);
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("[Error] strings were not valid. Please try again!");
+                Thread.Sleep(2000);
+                Console.ResetColor();
                 return;
             }
             user.FirstName = firstName;
+            _db.UpdateUSer(user);
+            Console.WriteLine("Data successfuly changed!", ConsoleColor.Green);
+        }
+        public void ChangeLastName(int id, string lastName)
+        {
+            T user = _db.GetUserbyId(id);
+            if ( Validation.ValidateString(lastName) == null)
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("[Error] strings were not valid. Please try again!");
+                Thread.Sleep(2000);
+                Console.ResetColor();
+                return;
+            }
             user.LastName = lastName;
             _db.UpdateUSer(user);
             Console.WriteLine("Data successfuly changed!", ConsoleColor.Green);
         }
-
 
 
 
@@ -103,11 +118,22 @@ namespace TimeTrackingApp.Services.Services
             {
                 Console.WriteLine("You dont have any statistics yet");
             }
+             
             foreach(var activity in user.Activities)
             { 
+                
                 activity.PrintInfo();
             }
+
               
         }
+
+        public void GlobalTime(User user)
+        {
+            Console.WriteLine($"{user.TotalHours.Sum()} GLOBAL TIME  total second for now");
+
+        }
+
+
     }
 }

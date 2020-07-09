@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading;
 
 namespace TimeTrackingApp.Services.Helpers
 {
@@ -12,16 +13,33 @@ namespace TimeTrackingApp.Services.Helpers
             bool isNumber = int.TryParse(number, out num);
             if (!isNumber)
             {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error try again");
+                Thread.Sleep(2000);
+                Console.ResetColor();
+     
                 return -1;
             }
             if (num <= 0 || num > range)
             {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("Error try again");
+                Thread.Sleep(2000);
+                Console.ResetColor();
                 return -1;
             }
             return num;
         }
 
-   
+        public static int ValidateAge(int age)
+        {
+            if (age < 18 && age > 120)
+            {
+                Console.WriteLine("Error try again");
+                return -1;
+            }
+            return age;
+        }
 
         public static string ValidateString(string str)
         {

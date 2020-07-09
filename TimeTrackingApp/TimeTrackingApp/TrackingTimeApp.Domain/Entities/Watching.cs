@@ -15,7 +15,14 @@ namespace TrackingTimeApp.Domain.Entities
         }
         public override void PrintInfo()
         {
-            Console.WriteLine($"{ActivityType.ToString()} : {Watching}you have enjoyed {WatchingType}  for {TRackedTime.Seconds} seconds from {StartTimer} to {StopTimer}");
+            Console.WriteLine($"{ActivityType.ToString()} :you have enjoyed {WatchingType}  for {TRackedTime.Seconds} seconds from {StartTimer} to {StopTimer}");
+            Console.WriteLine($"{TRackedTime.TotalMilliseconds} seconds");
+
+        }
+
+        public override void GetHours()
+        {
+            Console.WriteLine($"{TRackedTime.Hours}");
         }
     }
 }

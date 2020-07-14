@@ -100,10 +100,33 @@ namespace TrackingTimeApp.Domain
             }
         }
 
-        public void UpdateUser(T entity)
+  /*      public void UpdateUser(T entity)
         {
+            
             T item = Read().FirstOrDefault(x => x.Id == entity.Id);
             item = entity;
+        }*/
+
+
+        public void UpdateUser(T entity)
+        {
+            var list = Read();
+            T item = list.FirstOrDefault(x => x.Id == entity.Id);
+            item.Age = entity.Age;
+            item.Activities = entity.Activities;
+            item.FavoriteTypeBook = entity.FavoriteTypeBook;
+            item.FavoriteTypePuzzle = entity.FavoriteTypePuzzle;
+            item.FavoriteTypToWatch = entity.FavoriteTypToWatch;
+            item.FirstName = entity.FirstName;
+            item.LastName = entity.LastName;
+            item.Password = entity.Password;
+            item.TotalHoursOtherHobbies = entity.TotalHoursOtherHobbies;
+            item.TotalHoursPuzzles = entity.TotalHoursPuzzles;
+            item.TotalHoursReading = entity.TotalHoursReading;
+            item.TotalHoursWatching = entity.TotalHoursWatching;
+            item.Username = entity.Username;
+            item.Id = entity.Id;
+            Write(list);
         }
         #region Read/Write
         private List<T> Read()

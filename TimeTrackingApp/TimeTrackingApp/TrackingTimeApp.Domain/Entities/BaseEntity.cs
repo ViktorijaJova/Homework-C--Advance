@@ -7,7 +7,7 @@ using TrackingTimeApp.Domain.Interfaces;
 
 namespace TrackingTimeApp.Domain.Entities
 {
-    public abstract class BaseEntity : IBaseEntity
+    public  class BaseEntity : IBaseEntity
     {
 
         public TimeSpan TRackedTime { get; set; }

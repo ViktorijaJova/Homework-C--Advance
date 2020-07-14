@@ -6,8 +6,8 @@ namespace TrackingTimeApp.Domain.Enums
 {
     public enum BookType
     {
-        SciFi=1,
-        Drama=2,
-        Romance =3
+        SciFi,
+        Drama,
+        Romance 
     }
 }

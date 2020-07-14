@@ -22,7 +22,7 @@ namespace TimeTrackingApp.Services.Services
        
         public void ChangeFirstName(int id, string firstName)
         {
-            T user = _db.GetById(id);
+            T user = _db.GetUserById(id);
             if (Validation.ValidateString(firstName) == null)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -32,12 +32,12 @@ namespace TimeTrackingApp.Services.Services
                 return;
             }
             user.FirstName = firstName;
-            _db.UpdateUSer(user);
+            _db.UpdateUser(user);
             Console.WriteLine("Data successfuly changed!", ConsoleColor.Green);
         }
         public void ChangeLastName(int id, string lastName)
         {
-            T user = _db.GetById(id);
+            T user = _db.GetUserById(id);
             if ( Validation.ValidateString(lastName) == null)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -47,7 +47,7 @@ namespace TimeTrackingApp.Services.Services
                 return;
             }
             user.LastName = lastName;
-            _db.UpdateUSer(user);
+            _db.UpdateUser(user);
             Console.WriteLine("Data successfuly changed!", ConsoleColor.Green);
         }
 
@@ -55,32 +55,43 @@ namespace TimeTrackingApp.Services.Services
 
         public void ChangePassword(int id, string oldPassword, string newPassword)
         {
-            T user = _db.GetById(id);
-            if (user.Password != oldPassword)
+            var user = _db.GetUserById(id);
+            if (user.Password == oldPassword && oldPassword != newPassword)
             {
-                Console.WriteLine("[Error] Old password did not match", ConsoleColor.Red);
-                return;
+                if (Validation.ValidatePassword(newPassword) == null)
+                {
+
+                    Console.WriteLine("Password should not be shorter than 6 characters", ConsoleColor.Red);
+                    Thread.Sleep(3000);
+                    return;
+                }
             }
-            if (Validation.ValidatePassword(newPassword) == null)
+            else
             {
-                Console.WriteLine("[Error] New password is not valid", ConsoleColor.Red);
+                Console.WriteLine("You entered your old password wrong");
+                Thread.Sleep(3000);
                 return;
             }
             user.Password = newPassword;
-            _db.UpdateUSer(user);
-            Console.WriteLine("Password successfuly changed!", ConsoleColor.Green);
+            _db.UpdateUser(user);
+            Console.WriteLine("You succesfully changed your password!", ConsoleColor.Green);
         }
         public void DeactivateAccount(int id)
         {
-            _db.Delete(id);
-            Console.WriteLine("Processing request...");
-            Thread.Sleep(2000);
-            Console.WriteLine("Deactivated");
-            Console.Clear();
+            Console.WriteLine("deactivate your account? y/n");
+            string choice = Console.ReadLine();
+            if (choice == "y")
+            {
+                Console.WriteLine("Your account has been deacivated", ConsoleColor.Green);
+            }
+            else
+            {
+                return;
+            }
         }
         public T LogIn(string username, string password)
         {
-            T user = _db.GetAll().FirstOrDefault(x => x.Username == username && x.Password == password);
+            T user = _db.GetAllNewWay().FirstOrDefault(x => x.Username == username && x.Password == password);
 
 
             if (user == null)
@@ -107,7 +118,7 @@ namespace TimeTrackingApp.Services.Services
                     return null;
 
                 }
-                int id = _db.Insert(user);
+                int id = _db.InsertNewWay(user);
                 return _db.GetById(id);
             }
         

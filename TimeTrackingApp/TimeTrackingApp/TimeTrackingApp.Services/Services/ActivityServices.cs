@@ -96,14 +96,14 @@ namespace TimeTrackingApp.Services.Services
 
             var readings = user.Activities.OfType<Reading>().ToList();
             var totalaHours = user.TotalHoursReading.Sum().ToString();
-            var average = user.TotalHoursReading.Average().ToString();
+          //  var average = user.TotalHoursReading.Average().ToString();
             var totalPages = readings.Sum(pages => pages.Pages);
             var allTypesofBooks = readings.Select(name => name.BookType).ToList();
 
             if (readings.Count != 0)
             {
                 Console.WriteLine($"Total seconds spend {totalaHours}");
-                Console.WriteLine($"Average: {average}");
+              //  Console.WriteLine($"Average: {average}");
                 Console.WriteLine($"Total pages: {totalPages}");
 
 
@@ -137,7 +137,7 @@ namespace TimeTrackingApp.Services.Services
         {
             var totalOtherHobbiesHours = user.TotalHoursOtherHobbies.Sum();
             var otherHobbies = user.Activities.OfType<OtherHobbies>().ToList();
-            var average = user.TotalHoursOtherHobbies.Average().ToString();
+         //   var average = user.TotalHoursOtherHobbies.Average().ToString();
 
             var allhobies = otherHobbies.Select(name => name.Hobby).ToList();
 
@@ -145,7 +145,7 @@ namespace TimeTrackingApp.Services.Services
             if (otherHobbies.Count != 0)
             {
                 Console.WriteLine($"Total seconds spent in your hobbies: {totalOtherHobbiesHours}");
-                Console.WriteLine($"Average time {average} seconds");
+             //   Console.WriteLine($"Average time {average} seconds");
                 Console.WriteLine("Hobbies:");
                 foreach (var hobby in allhobies)
                 {
@@ -176,13 +176,13 @@ namespace TimeTrackingApp.Services.Services
             var movies = watchings.Where(watching => watching.WatchingType == WatchingType.Movie).Sum(hours => hours.TRackedTime.TotalSeconds);
             var standup = watchings.Where(watching => watching.WatchingType == WatchingType.StandUp).Sum(hours => hours.TRackedTime.TotalSeconds);
             var tvshows = watchings.Where(watching => watching.WatchingType == WatchingType.TvShow).Sum(hours => hours.TRackedTime.TotalSeconds);
-            var average = user.TotalHoursWatching.Average().ToString();
+            //var average = user.TotalHoursWatching.Average().ToString();
 
 
             if (watchings.Count != 0)
             {
                 Console.WriteLine($"Total seconds spend {totalWatchingHours} in total");
-                Console.WriteLine($"Average secods {average}");
+              //  Console.WriteLine($"Average secods {average}");
                 Console.WriteLine($"Just movies: {movies} seconds");
                 Console.WriteLine($"Just standup: {standup} seconds");
                 Console.WriteLine($"Just tvshows: {tvshows} seconds");
@@ -217,14 +217,14 @@ namespace TimeTrackingApp.Services.Services
             var rubikCube = puzzles.Where(first => first.PuzzlesType == PuzzlesType.RubiksCube).Count();
             var jigsaw = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Jigsaw).Count();
             var crossword = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Crossword).Count();
-            var average = user.TotalHoursPuzzles.Average().ToString();
+           // var average = user.TotalHoursPuzzles.Average().ToString();
 
 
 
             if (puzzles.Count != 0)
             {
                 Console.WriteLine($"total seconds spend {totalPuzzlesHours}");
-                Console.WriteLine($"Average seconds {average}");
+              //  Console.WriteLine($"Average seconds {average}");
                 Console.WriteLine("Escape Room :" + escapeRoom);
                 Console.WriteLine("Rubik Cube: " + rubikCube);
                 Console.WriteLine("Jigsaw: " + jigsaw);
@@ -252,10 +252,10 @@ namespace TimeTrackingApp.Services.Services
         {
 
             var allGeneralHours = user.Activities.Sum(hours => hours.TRackedTime.TotalSeconds);
-            var average = user.Activities.Average(avg => avg.TRackedTime.TotalSeconds);
+           // var average = user.Activities.Average(avg => avg.TRackedTime.TotalSeconds);
 
             Console.WriteLine($" Total time doing all of the activities{allGeneralHours} seconds");
-            Console.WriteLine($"Average time {average}");
+           // Console.WriteLine($"Average time {average}");
 
 
 

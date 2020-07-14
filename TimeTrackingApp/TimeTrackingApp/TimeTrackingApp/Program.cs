@@ -24,7 +24,7 @@ namespace TimeTrackingApp
 
 		public static void Users()
 		{
-			_userService.Register(new User {Id=1, FirstName = "Viktorija", Age = 23, Username = "Viktorija123", Password = "Viki123" });
+			_userService.Register(new User { FirstName = "Viktorija",LastName = "Jovanovska", Age = 23, Username = "Viktorija123", Password = "Viki123" });
 			
 		}
 		public

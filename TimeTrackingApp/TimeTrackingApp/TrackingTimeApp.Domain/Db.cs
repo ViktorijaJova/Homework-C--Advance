@@ -13,50 +13,40 @@ namespace TrackingTimeApp.Domain
 {
 	public class Db<T>:IDb<T> where T:User
 	{
-/*		private List<T> _db
-*/
+        public int IdCount { get; set; }
 
+    
+      /*  public List<T> GetAll()
+        {
+            return _db;
+        }*/
+       
 
-	/*	public Db()
-		{
-			_db = new List<T>();
-			IdCounter = 1;
-		}*/
+     /*   public int Insert(T entity)
+        {
+            entity.Id = IdCount;
+            _db.Add(entity);
+            IdCount++;
+            return entity.Id;
 
-	/*	public List<T> GetAll()
-		{
-			return _db;
-		}*/
+        }*/
+      
 
-	/*	public T GetUserbyId(int id)
-		{
-
-			return _db.FirstOrDefault(x => x.Id == id);
-		}*/
-
-/*		public int Insert (T entity)
-		{
-			entity.Id = IdCounter;
-			_db.Add(entity);
-			IdCounter++;
-			return entity.Id;
-		}
-*/
-		public void UpdateUSer (T entity)
-		{
-            List<T> data = Read();
-            T dbEntity = data.FirstOrDefault(x => x.Id == entity.Id);
+     /*   public void RemoveUser(int id)
+        {
+            T item = _db.FirstOrDefault(x => x.Id == id);
+            if (item != null) _db.Remove(item);
         }
-	
+*/
 
         private readonly string _dbDirectory;
         private readonly string _dbFile;
 
         // fields that we need to change
-        private int _idTracker = 0;
 
         public Db()
         {
+            IdCount = 1;
             _dbDirectory = $@"..\..\..\Db\";
             _dbFile = $"{_dbDirectory}{typeof(T).Name}s.json";
             // _dbFile = $"{_dbDirectory}{nameof(T)}s.json";
@@ -71,14 +61,14 @@ namespace TrackingTimeApp.Domain
             }
 
             // set id to last record
-            List<T> data = Read();
-            if (data == null)
+            List<T> _db = Read();
+            if (_db == null)
             {
                 Write(new List<T>());
             }
-            else if (data.Count > 0)
+            else if (_db.Count > 0)
             {
-                _idTracker = data[data.Count - 1].Id;
+               IdCount = _db[_db.Count - 1].Id;
             }
         }
 
@@ -98,17 +88,23 @@ namespace TrackingTimeApp.Domain
             }
 
             // set id to last record
-            List<T> data = Read();
-            if (data == null)
+            List<T> _db = Read();
+            if (_db== null)
             {
                 Write(new List<T>());
             }
-            else if (data.Count > 0)
+            else if (_db.Count > 0)
             {
-                _idTracker = data[data.Count - 1].Id;
+                IdCount = _db
+                    [_db.Count - 1].Id;
             }
         }
 
+        public void UpdateUser(T entity)
+        {
+            T item = Read().FirstOrDefault(x => x.Id == entity.Id);
+            item = entity;
+        }
         #region Read/Write
         private List<T> Read()
         {
@@ -146,7 +142,7 @@ namespace TrackingTimeApp.Domain
         }
         #endregion
 
-        public List<T> GetAll()
+        public List<T> GetAllNewWay()
         {
             return Read();
         }
@@ -159,34 +155,36 @@ namespace TrackingTimeApp.Domain
             // return Read().FirstOrDefault(x => x.Id == id);
         }
 
-        public int Insert(T entity)
+        public int InsertNewWay(T entity)
         {
             List<T> data = Read();
-            _idTracker++;
-            entity.Id = _idTracker;
+            IdCount++;
+            entity.Id = IdCount;
             data.Add(entity);
             Write(data);
             return entity.Id;
         }
 
-     /*   public void Update(T entity)
-        {
-            T dbEntity = Read().FirstOrDefault(x => x.Id == entity.Id);
+        /*  public void Update(T entity)
+          {
+              T dbEntity = Read().FirstOrDefault(x => x.Id == entity.Id);
 
-        }*/
+          }*/
 
-        public void Delete(int id)
+        /* public void Delete(int id)
+         {
+             List<T> data = Read();
+             T dbEntity = data.FirstOrDefault(x => x.Id == id);
+             data.RemoveAll(x => x.Id == dbEntity.Id);
+             Write(data);
+         }
+ */
+        public T GetUserById(int id)
         {
-            List<T> data = Read();
-            T dbEntity = data.FirstOrDefault(x => x.Id == id);
-            data.RemoveAll(x => x.Id == dbEntity.Id);
-            Write(data);
+            return Read().FirstOrDefault(user => user.Id == id);
+
         }
 
-        public void ClearDb()
-        {
-            Write(new List<T>());
-        }
     }
 
 

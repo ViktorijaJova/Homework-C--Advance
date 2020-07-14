@@ -6,8 +6,10 @@ using System.Reflection.Metadata.Ecma335;
 using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
+using TrackingTimeApp.Domain;
 using TrackingTimeApp.Domain.Entities;
 using TrackingTimeApp.Domain.Enums;
+using TrackingTimeApp.Domain.Interfaces;
 
 namespace TimeTrackingApp.Services.Services
 {
@@ -15,8 +17,8 @@ namespace TimeTrackingApp.Services.Services
     {
         public  MenuService menus = new MenuService();
 
-     
-      
+        static IDb<User> _userDb = new Db<User>();
+
 
         public void Tracking(ActivityType activity, User user)
         {
@@ -51,6 +53,7 @@ namespace TimeTrackingApp.Services.Services
                     var readlines = Console.ReadLine();
                     user.FavoriteTypePuzzle.Add(readlines);
                     user.Activities.Add(puzzles);
+
                     Console.WriteLine("Your information has been added to your statistics!");
                     Console.ReadLine();
                     Console.Clear();
@@ -78,6 +81,7 @@ namespace TimeTrackingApp.Services.Services
                     otherhobbies.Hobby = Console.ReadLine();
                     
                     user.Activities.Add(otherhobbies);
+
                     Console.WriteLine("Your information has been added to your statistics!");
                     Console.ReadLine();
                     Console.Clear();
@@ -92,13 +96,14 @@ namespace TimeTrackingApp.Services.Services
 
             var readings = user.Activities.OfType<Reading>().ToList();
             var totalaHours = user.TotalHoursReading.Sum().ToString();
+            var average = user.TotalHoursReading.Average().ToString();
             var totalPages = readings.Sum(pages => pages.Pages);
             var allTypesofBooks = readings.Select(name => name.BookType).ToList();
-
 
             if (readings.Count != 0)
             {
                 Console.WriteLine($"Total seconds spend {totalaHours}");
+                Console.WriteLine($"Average: {average}");
                 Console.WriteLine($"Total pages: {totalPages}");
 
 
@@ -107,6 +112,7 @@ namespace TimeTrackingApp.Services.Services
                 {
                     Console.WriteLine($"{book}");
                 }
+
 
             }
             else
@@ -124,19 +130,22 @@ namespace TimeTrackingApp.Services.Services
 
 
 
+
         }
 
         public void SeeOtherHobbiesStats(User user)
         {
             var totalOtherHobbiesHours = user.TotalHoursOtherHobbies.Sum();
             var otherHobbies = user.Activities.OfType<OtherHobbies>().ToList();
+            var average = user.TotalHoursOtherHobbies.Average().ToString();
+
             var allhobies = otherHobbies.Select(name => name.Hobby).ToList();
 
 
             if (otherHobbies.Count != 0)
             {
                 Console.WriteLine($"Total seconds spent in your hobbies: {totalOtherHobbiesHours}");
-
+                Console.WriteLine($"Average time {average} seconds");
                 Console.WriteLine("Hobbies:");
                 foreach (var hobby in allhobies)
                 {
@@ -151,10 +160,12 @@ namespace TimeTrackingApp.Services.Services
                 Console.ResetColor();
                 Console.Clear();
             }
-           
-        
-            
+
+
+
+
         }
+
 
         public void SeeWatchingStats(User user)
         {
@@ -165,10 +176,13 @@ namespace TimeTrackingApp.Services.Services
             var movies = watchings.Where(watching => watching.WatchingType == WatchingType.Movie).Sum(hours => hours.TRackedTime.TotalSeconds);
             var standup = watchings.Where(watching => watching.WatchingType == WatchingType.StandUp).Sum(hours => hours.TRackedTime.TotalSeconds);
             var tvshows = watchings.Where(watching => watching.WatchingType == WatchingType.TvShow).Sum(hours => hours.TRackedTime.TotalSeconds);
+            var average = user.TotalHoursWatching.Average().ToString();
+
 
             if (watchings.Count != 0)
             {
                 Console.WriteLine($"Total seconds spend {totalWatchingHours} in total");
+                Console.WriteLine($"Average secods {average}");
                 Console.WriteLine($"Just movies: {movies} seconds");
                 Console.WriteLine($"Just standup: {standup} seconds");
                 Console.WriteLine($"Just tvshows: {tvshows} seconds");
@@ -185,10 +199,10 @@ namespace TimeTrackingApp.Services.Services
 
 
 
-            
-         
 
-            
+
+
+
 
         }
 
@@ -203,11 +217,14 @@ namespace TimeTrackingApp.Services.Services
             var rubikCube = puzzles.Where(first => first.PuzzlesType == PuzzlesType.RubiksCube).Count();
             var jigsaw = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Jigsaw).Count();
             var crossword = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Crossword).Count();
+            var average = user.TotalHoursPuzzles.Average().ToString();
+
 
 
             if (puzzles.Count != 0)
             {
                 Console.WriteLine($"total seconds spend {totalPuzzlesHours}");
+                Console.WriteLine($"Average seconds {average}");
                 Console.WriteLine("Escape Room :" + escapeRoom);
                 Console.WriteLine("Rubik Cube: " + rubikCube);
                 Console.WriteLine("Jigsaw: " + jigsaw);
@@ -223,9 +240,9 @@ namespace TimeTrackingApp.Services.Services
                 Console.Clear();
             }
 
-          
 
-         //   List<int> vs = new List<int>() { escapeRoom, rubikCube, jigsaw, crossword };
+
+            //   List<int> vs = new List<int>() { escapeRoom, rubikCube, jigsaw, crossword };
 
 
 
@@ -235,8 +252,11 @@ namespace TimeTrackingApp.Services.Services
         {
 
             var allGeneralHours = user.Activities.Sum(hours => hours.TRackedTime.TotalSeconds);
+            var average = user.Activities.Average(avg => avg.TRackedTime.TotalSeconds);
 
             Console.WriteLine($" Total time doing all of the activities{allGeneralHours} seconds");
+            Console.WriteLine($"Average time {average}");
+
 
 
 
@@ -245,10 +265,14 @@ namespace TimeTrackingApp.Services.Services
             var puzzles = user.Activities.Where(x => x.ActivityType == ActivityType.Puzzles).Count();
             var hobbies = user.Activities.Where(x => x.ActivityType == ActivityType.OtherHobbies).Count();
 
+           
+
             Console.WriteLine("Reading: " + reading);
             Console.WriteLine("Watching: " + watching);
             Console.WriteLine("Puzzles: " + puzzles);
             Console.WriteLine("Hobbies: " + hobbies);
+
+
 
             Console.ReadLine();
 

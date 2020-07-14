@@ -12,15 +12,17 @@ namespace TimeTrackingApp.Services.Services
     public class UserService<T> : IUserService<T> where T : User
     {
 
+
         private Db<T> _db;
         public UserService()
         {
             _db = new Db<T>();
         }
 
+       
         public void ChangeFirstName(int id, string firstName)
         {
-            T user = _db.GetUserbyId(id);
+            T user = _db.GetById(id);
             if (Validation.ValidateString(firstName) == null)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -35,7 +37,7 @@ namespace TimeTrackingApp.Services.Services
         }
         public void ChangeLastName(int id, string lastName)
         {
-            T user = _db.GetUserbyId(id);
+            T user = _db.GetById(id);
             if ( Validation.ValidateString(lastName) == null)
             {
                 Console.BackgroundColor = ConsoleColor.Red;
@@ -53,7 +55,7 @@ namespace TimeTrackingApp.Services.Services
 
         public void ChangePassword(int id, string oldPassword, string newPassword)
         {
-            T user = _db.GetUserbyId(id);
+            T user = _db.GetById(id);
             if (user.Password != oldPassword)
             {
                 Console.WriteLine("[Error] Old password did not match", ConsoleColor.Red);
@@ -70,7 +72,7 @@ namespace TimeTrackingApp.Services.Services
         }
         public void DeactivateAccount(int id)
         {
-            _db.RemoveUser(id);
+            _db.Delete(id);
             Console.WriteLine("Processing request...");
             Thread.Sleep(2000);
             Console.WriteLine("Deactivated");
@@ -106,7 +108,7 @@ namespace TimeTrackingApp.Services.Services
 
                 }
                 int id = _db.Insert(user);
-                return _db.GetUserbyId(id);
+                return _db.GetById(id);
             }
         
 
@@ -122,7 +124,9 @@ namespace TimeTrackingApp.Services.Services
         
 
               
+
         }*/
+
 
     
 

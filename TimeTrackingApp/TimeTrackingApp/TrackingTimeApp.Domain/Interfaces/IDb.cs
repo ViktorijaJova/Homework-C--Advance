@@ -9,14 +9,16 @@ namespace TrackingTimeApp.Domain.Interfaces
    public interface IDb<T> where T:User
     {
         public List<T> GetAll();
-        public T GetUserbyId(int id);
+        public T GetById(int id);
+
 
         public int Insert(T entity);
 
         public void UpdateUSer(T entity);
-        public void RemoveUser(int id);
 
-    
+/*        public void RemoveUser(int id);
+*/
+
 
 
 

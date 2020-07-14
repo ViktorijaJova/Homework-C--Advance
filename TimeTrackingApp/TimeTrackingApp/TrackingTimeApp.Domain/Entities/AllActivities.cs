@@ -8,7 +8,7 @@ namespace TrackingTimeApp.Domain.Entities
     {
         public List<BaseEntity> Activities { get; set; } = new List<BaseEntity>();
 
-        public List<double> TotalHoursReading { get; set; } = new List<double>()  ;
+        public List<double> TotalHoursReading { get; set; } = new List<double>();
 
         public List<double> TotalHoursWatching { get; set; } = new List<double>();
         public List<double> TotalHoursPuzzles { get; set; } = new List<double>();

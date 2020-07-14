@@ -4,8 +4,10 @@ using System.Runtime.Serialization;
 using System.Threading;
 using TimeTrackingApp.Services.Helpers;
 using TimeTrackingApp.Services.Services;
+using TrackingTimeApp.Domain;
 using TrackingTimeApp.Domain.Entities;
 using TrackingTimeApp.Domain.Enums;
+using TrackingTimeApp.Domain.Interfaces;
 
 namespace TimeTrackingApp
 {
@@ -17,14 +19,13 @@ namespace TimeTrackingApp
 		public static MenuService _menu = new MenuService();
 		public static UserService<User> _userService = new UserService<User>();
 		public static User _currentuser = new User();
+		static IDb<User> _userDb = new Db<User>();
 
 
 		public static void Users()
 		{
-			_userService.Register(new User { FirstName = "Viktorija", Age = 23, Username = "Viktorija123", Password = "Viki123" });
-			_userService.Register(new User { FirstName = "Monika", Age = 33, Username = "Monika123", Password = "Monika123" });
-
-
+			_userService.Register(new User {Id=1, FirstName = "Viktorija", Age = 23, Username = "Viktorija123", Password = "Viki123" });
+			
 		}
 		public
 		static void Main(string[] args)

@@ -16,16 +16,6 @@ namespace TrackingTimeApp.Domain.Interfaces
         public DateTime StopTimer  { get; set; }
 
 
-       /* public Reading Reading { get; set; }
-
-        public Puzzles Puzzles { get; set; }
-
-
-        public Watching Watching { get; set; }
-
-        public OtherHobbies OtherHobbies { get; set; }
-*/
-
         public ActivityType ActivityType { get; set; }
     }
 }

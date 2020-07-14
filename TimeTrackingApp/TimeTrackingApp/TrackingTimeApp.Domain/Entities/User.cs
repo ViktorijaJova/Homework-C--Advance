@@ -8,7 +8,6 @@ namespace TrackingTimeApp.Domain.Entities
     public class User : AllActivities,IUser
     {
         public int Id { get; set; }
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public int Age { get; set; }

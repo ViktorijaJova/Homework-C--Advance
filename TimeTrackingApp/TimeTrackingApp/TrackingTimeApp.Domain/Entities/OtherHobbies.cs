@@ -14,17 +14,7 @@ namespace TrackingTimeApp.Domain.Entities
             ActivityType = ActivityType.OtherHobbies;
         }
 
-        public override void PrintInfo()
-        {
-            //finish later
-            Console.WriteLine($"{ActivityType.ToString()} : {Hobby} you have enjoyed  {Hobby} for {TRackedTime.Seconds} seconds from {StartTimer} to {StopTimer}");
-            Console.WriteLine($"{TRackedTime.TotalMilliseconds} seconds");
+   
 
-        }
-
-        public override void GetHours()
-        {
-            Console.WriteLine($"{TRackedTime.Hours}");
-        }
     }
 }

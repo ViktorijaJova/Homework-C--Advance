@@ -16,9 +16,7 @@ namespace TrackingTimeApp.Domain.Interfaces
         public void UpdateUSer(T entity);
         public void RemoveUser(int id);
 
-        public List<BaseEntity> GetAllActivities(int id);
-        public BaseEntity GetActivity(ActivityType activity, int id);
-
+    
 
 
 

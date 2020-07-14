@@ -47,12 +47,16 @@ namespace TimeTrackingApp
 						string username = Console.ReadLine();
 						Console.WriteLine("Enter  your Password:");
 						string password = Validation.ValidatePassword(Console.ReadLine());
-
+				
 						_currentuser = _userService.LogIn(username, password);
 						if (_currentuser == null) continue;
 
 
 						bool isLoged = true;
+						Console.BackgroundColor = ConsoleColor.Green;
+						Console.WriteLine(" Successful Login Welcome back");
+						Console.ResetColor();
+						Console.ReadLine();
 						Console.Clear();
 				
 						while (isLoged)
@@ -71,19 +75,19 @@ namespace TimeTrackingApp
 							if (choice == 2)
 							{
 								Console.WriteLine("Account managment, choose what to do:");
-								Console.WriteLine("1.Deactivate account 2.Change Password 3.ChangeFirstName 4.Change LastName");
-								int readmanagingchoice = Validation.ValidateNumber(Console.ReadLine(),4);
+								Console.WriteLine("1.Deactivate account 2.Change Password 3.ChangeFirstName 4.Change LastName 5.GoBack");
+								int readmanagingchoice = Validation.ValidateNumber(Console.ReadLine(),5);
 								if(readmanagingchoice == 1)
 								{
 									Console.WriteLine("Enter your id");
-									 var readingid = Validation.ValidateNumber(Console.ReadLine(),50);
+									 var readingid = Validation.ValidateNumber(Console.ReadLine(),10);
 									_userService.DeactivateAccount(readingid);
 
 								}
 								else if(readmanagingchoice == 2)
 								{
 									Console.WriteLine("Enter your id");
-									var readid = Validation.ValidateNumber(Console.ReadLine(),50);
+									var readid = Validation.ValidateNumber(Console.ReadLine(),10);
 									Console.WriteLine("Enter your old password:");
 								    var oldpassword = Validation.ValidatePassword(Console.ReadLine());
 									Console.WriteLine("Enter your new password");
@@ -91,12 +95,15 @@ namespace TimeTrackingApp
 									_userService.ChangePassword(readid, oldpassword, newpassword);
 									Console.BackgroundColor = ConsoleColor.Green;
 									Console.WriteLine("Succesful");
+									Console.ResetColor();
+									Console.ReadLine();
+									Console.Clear();
 
 								}
 								else if(readmanagingchoice == 3)
 								{
 									Console.WriteLine("Enter your id");
-									var readid = Validation.ValidateNumber(Console.ReadLine(), 50);
+									var readid = Validation.ValidateNumber(Console.ReadLine(), 10);
 									Console.WriteLine("Enter your firstName:");
 									var oldfirstname = Validation.ValidateString(Console.ReadLine());
 									Console.WriteLine("Enter your new firstName");
@@ -105,7 +112,7 @@ namespace TimeTrackingApp
 									Console.BackgroundColor = ConsoleColor.Green;
 									Console.WriteLine("Succesful");
 									Console.ResetColor();
-									Thread.Sleep(2000);
+									Console.ReadLine();
 									Console.Clear();
 
 
@@ -113,7 +120,7 @@ namespace TimeTrackingApp
 								else if(readmanagingchoice == 4)
 								{
 									Console.WriteLine("Enter your id");
-									var readid = Validation.ValidateNumber(Console.ReadLine(), 50);
+									var readid = Validation.ValidateNumber(Console.ReadLine(), 10);
 									Console.WriteLine("Enter your lastName:");
 									var oldlastname = Validation.ValidateString(Console.ReadLine());
 									Console.WriteLine("Enter your new lastName");
@@ -122,9 +129,14 @@ namespace TimeTrackingApp
 									Console.BackgroundColor = ConsoleColor.Green;
 									Console.WriteLine("Succesful");
 									Console.ResetColor();
-									Thread.Sleep(2000);
+									Console.ReadLine();
 									Console.Clear();
 
+								}
+								else if(readmanagingchoice == 5)
+								{
+									Console.Clear();
+									continue;
 								}
 							
 
@@ -133,34 +145,34 @@ namespace TimeTrackingApp
 							if (choice == 3)
 							{
 								_menu.StatisticMenu();
-								int readlineforstatistic = Validation.ValidateNumber(Console.ReadLine(),5);
-								if(readlineforstatistic == 1)
+								int readlineforstatistic = Validation.ValidateNumber(Console.ReadLine(),6);
+								
+								switch (readlineforstatistic)
 								{
-									_userService.SeeStatistics(_currentuser);
-								}
-								else if(readlineforstatistic == 2)
-								{
-									_userService.SeeStatistics(_currentuser);
+									case 1: 
+										_activityServices.SeeReadingStats(_currentuser);
+										break;
+									case 2: 
+										_activityServices.SeePuzzlesStats(_currentuser);
 
-								}
-								else if(readlineforstatistic == 3)
-								{
-									_userService.SeeStatistics(_currentuser);
+										break;
+									case 3: 
+									_activityServices.SeeWatchingStats(_currentuser);
 
-								}
-								else if(readlineforstatistic == 4)
-								{
-									_userService.SeeStatistics(_currentuser);
+										break;
+									case 4:
+									_activityServices.SeeOtherHobbiesStats(_currentuser);
 
-								}
-								else if(readlineforstatistic ==5)
-								{
-									_userService.GlobalTime(_currentuser);
+										break;
+									case 5: 
+									_activityServices.SeeGeneralStats(_currentuser);
 
+										break;
+									case 6:
+										Console.Clear();
+										break;
+								
 								}
-
-						/*		Thread.Sleep(5000);
-								Console.Clear();*/
 							}
 						
 							if (choice == 4)
@@ -191,7 +203,7 @@ namespace TimeTrackingApp
 					Console.BackgroundColor = ConsoleColor.Green;
 					Console.WriteLine("Successfully regisitered!");
 					Console.ResetColor();
-					Thread.Sleep(2000);
+					Console.ReadLine();
 					Console.Clear();
 					
 

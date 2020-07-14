@@ -28,9 +28,7 @@ namespace TimeTrackingApp.Services.Services
 
         public int MainMenu()
         {
-            Console.BackgroundColor = ConsoleColor.Green;
-            Console.WriteLine(" Successful Login Welcome back");
-            Console.ResetColor();
+         
             Console.WriteLine("Enter the number in front of the activity you want to do:");
             Console.WriteLine("1.Start Tracking 2. Manage your Account 3.Your Statistics 4.Log Out");
             int readline = Validation.ValidateNumber(Console.ReadLine(),4);
@@ -79,10 +77,9 @@ namespace TimeTrackingApp.Services.Services
         public void StatisticMenu()
         {
             Console.WriteLine("Enter the number in front of the activity");
-            Console.WriteLine("1.Reading 2.Puzzles 3.Watching 4.OtherHobby 5.Global Time");
-         /*   int readline = Validation.ValidateNumber(Console.ReadLine(), 5);
-            return readline;*/
-
+            Console.WriteLine("1.Reading 2.Puzzles 3.Watching 4.Other hobbies 5.General 6.Go Back");
+             
+            }
         }
     }
-}
+

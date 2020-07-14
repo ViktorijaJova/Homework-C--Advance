@@ -25,7 +25,7 @@ namespace TimeTrackingApp.Services.Services
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("[Error] strings were not valid. Please try again!");
-                Thread.Sleep(2000);
+                Console.ReadLine();
                 Console.ResetColor();
                 return;
             }
@@ -40,7 +40,7 @@ namespace TimeTrackingApp.Services.Services
             {
                 Console.BackgroundColor = ConsoleColor.Red;
                 Console.WriteLine("[Error] strings were not valid. Please try again!");
-                Thread.Sleep(2000);
+                Console.ReadLine();
                 Console.ResetColor();
                 return;
             }
@@ -110,7 +110,7 @@ namespace TimeTrackingApp.Services.Services
             }
         
 
-        public void SeeStatistics(User user)
+   /*     public void SeeStatistics(User user)
         {
             Console.WriteLine("Your statistics");
 
@@ -119,20 +119,12 @@ namespace TimeTrackingApp.Services.Services
                 Console.WriteLine("You dont have any statistics yet");
             }
              
-            foreach(var activity in user.Activities)
-            { 
-                
-                activity.PrintInfo();
-            }
+        
 
               
-        }
+        }*/
 
-        public void GlobalTime(User user)
-        {
-            Console.WriteLine($"{user.TotalHours.Sum()} GLOBAL TIME  total second for now");
-
-        }
+    
 
 
     }

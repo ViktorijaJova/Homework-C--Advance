@@ -17,20 +17,10 @@ namespace TrackingTimeApp.Domain.Entities
         {
             ActivityType = ActivityType.Reading;
         }
-        public override void PrintInfo()
-        {
-            
-            Console.WriteLine($"Reading :  you have enjoyed {BookType} and read {Pages}  for {TRackedTime.Seconds} seconds from {StartTimer} to {StopTimer}");
-
-            Console.WriteLine($"{TRackedTime.TotalMinutes}  all seconds spend doing this activity in total");
-
-        }
 
 
-        public override void GetHours()
-        {
-            Console.WriteLine($"{TRackedTime.Hours}");
-        }
+
+ 
 
     }
 }

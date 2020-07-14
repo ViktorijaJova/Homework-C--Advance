@@ -15,17 +15,7 @@ namespace TrackingTimeApp.Domain.Entities
         public DateTime StartTimer { get; set; }
 
         public DateTime StopTimer { get; set; }
-/*
-        public Reading Reading { get; set; }
 
-        public Watching Watching { get; set; }
-
-
-        public Puzzles Puzzles { get; set; }
-
-        public OtherHobbies OtherHobbies { get; set; }
-
-*/
         public ActivityType ActivityType { get; set; }
 
         
@@ -34,11 +24,11 @@ namespace TrackingTimeApp.Domain.Entities
         public void TrackTimeSpendDoingActivity()
         {
             StartTimer = DateTime.Now;
-            Console.WriteLine("Your timer has started....");
+            Console.WriteLine("Your tracking has started ");
 
             Stopwatch timer = new Stopwatch();
             timer.Start();
-            Console.WriteLine("If you want to stop your timer press Enter!");
+            Console.WriteLine("If you want to stop doing your activity press Enter!");
             ConsoleKeyInfo key = Console.ReadKey();
 
             if(key.Key == ConsoleKey.Enter)
@@ -55,9 +45,7 @@ namespace TrackingTimeApp.Domain.Entities
                 Console.WriteLine("[Error!!!]");
             }
         }
-        public abstract void PrintInfo();
 
-        public abstract void GetHours();
        
      
     }

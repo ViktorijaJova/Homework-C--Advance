@@ -14,8 +14,8 @@ namespace TimeTrackingApp.Services.Services
         T LogIn(string username, string password);
         T Register(T user);
         public void DeactivateAccount(int id);
-        public void SeeStatistics(User user);
-
+/*        public void SeeStatistics(User user);
+*/
 
 
     }

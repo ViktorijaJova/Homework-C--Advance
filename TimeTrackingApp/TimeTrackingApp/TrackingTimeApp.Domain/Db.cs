@@ -58,18 +58,6 @@ namespace TrackingTimeApp.Domain
 		}
 
 
-		public List<BaseEntity> GetAllActivities(int id)
-		{
-			T user = _db.FirstOrDefault(x => x.Id == id);
-			return user.Activities;
-		}
-
-		public BaseEntity GetActivity(ActivityType activity, int id)
-		{
-			T user = _db.FirstOrDefault(x => x.Id == id);
-			var userActivity = user.Activities.FirstOrDefault(a => a.ActivityType == activity);
-			return userActivity;
-		}
 
 	}
 	}

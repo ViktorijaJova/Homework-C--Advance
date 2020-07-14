@@ -14,7 +14,6 @@ namespace TrackingTimeApp.Domain.Interfaces
 
         public int Age { get; set; }
         public string Password { get; set; }
-        List<BaseEntity> Activities { get; set; }
 
 
     }

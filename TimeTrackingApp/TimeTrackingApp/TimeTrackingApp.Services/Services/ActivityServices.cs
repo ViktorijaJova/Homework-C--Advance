@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http.Headers;
+using System.Reflection.Metadata.Ecma335;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading;
 using TrackingTimeApp.Domain.Entities;
@@ -11,15 +15,8 @@ namespace TimeTrackingApp.Services.Services
     {
         public  MenuService menus = new MenuService();
 
-        public override void GetHours()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void PrintInfo()
-        {
-            throw new NotImplementedException();
-        }
+     
+      
 
         public void Tracking(ActivityType activity, User user)
         {
@@ -28,18 +25,18 @@ namespace TimeTrackingApp.Services.Services
                 case ActivityType.Reading:
                     var reading = new Reading();
                     reading.TrackTimeSpendDoingActivity();
-                    user.TotalHours.Add(reading.TRackedTime.TotalSeconds);
+                    user.TotalHoursReading.Add(reading.TRackedTime.TotalSeconds);
 
                     Console.WriteLine("What kind of book did you read");
                     reading.BookType = (BookType)menus.ShowReadingTypes();
-                    string readlino = Console.ReadLine();
-                    user.FavoriteType.Add(readlino);
+                    var readlino = Console.ReadLine();
+                    user.FavoriteTypeBook.Add(readlino);
                     Console.WriteLine("And how many pages:");
                     reading.Pages = int.Parse(Console.ReadLine());
 
                     user.Activities.Add(reading);
                     Console.WriteLine("Added...");
-                    Thread.Sleep(2000);
+                    Console.ReadLine();
                     Console.Clear();
               
                     break;
@@ -47,27 +44,27 @@ namespace TimeTrackingApp.Services.Services
                 case ActivityType.Puzzles:
                     var puzzles = new Puzzles();
                     puzzles.TrackTimeSpendDoingActivity();
-                    user.TotalHours.Add(puzzles.TRackedTime.TotalSeconds);
+                    user.TotalHoursPuzzles.Add(puzzles.TRackedTime.TotalSeconds);
 
                     Console.WriteLine("What kind of Puzzle did you do?");
                     puzzles.PuzzlesType = (PuzzlesType)menus.ShowPuzzlesTypes();
                     var readlines = Console.ReadLine();
-                    user.FavoriteType.Add(readlines);
+                    user.FavoriteTypePuzzle.Add(readlines);
                     user.Activities.Add(puzzles);
                     Console.WriteLine("Your information has been added to your statistics!");
-                    Thread.Sleep(2000);
+                    Console.ReadLine();
                     Console.Clear();
                     break;
 
                 case ActivityType.Watching:
                     var watching = new Watching();
                     watching.TrackTimeSpendDoingActivity();
-                    user.TotalHours.Add(watching.TRackedTime.TotalSeconds);
+                    user.TotalHoursWatching.Add(watching.TRackedTime.TotalSeconds);
 
                     Console.WriteLine("What were you watching?");
                     watching.WatchingType = (WatchingType)menus.ShowWatchingTypes();
                     var readline = Console.ReadLine();
-                    user.FavoriteType.Add(readline);
+                    user.FavoriteTypToWatch.Add(readline);
                   
                     user.Activities.Add(watching);
                     Console.WriteLine("Your information has been added to your statistics!");
@@ -76,19 +73,189 @@ namespace TimeTrackingApp.Services.Services
                 case ActivityType.OtherHobbies:
                     var otherhobbies = new OtherHobbies();
                     otherhobbies.TrackTimeSpendDoingActivity();
-                    user.TotalHours.Add(otherhobbies.TRackedTime.TotalSeconds);
+                    user.TotalHoursOtherHobbies.Add(otherhobbies.TRackedTime.TotalSeconds);
                     Console.WriteLine("Please enter what hobby were you doing");
                     otherhobbies.Hobby = Console.ReadLine();
                     
                     user.Activities.Add(otherhobbies);
                     Console.WriteLine("Your information has been added to your statistics!");
-                    Thread.Sleep(2000);
+                    Console.ReadLine();
                     Console.Clear();
                     break;
-                default:
+                default : 
                     break;
             }
 
         }
+        public void SeeReadingStats(User user)
+        {
+
+            var readings = user.Activities.OfType<Reading>().ToList();
+            var totalaHours = user.TotalHoursReading.Sum().ToString();
+            var totalPages = readings.Sum(pages => pages.Pages);
+            var allTypesofBooks = readings.Select(name => name.BookType).ToList();
+
+
+            if (readings.Count != 0)
+            {
+                Console.WriteLine($"Total seconds spend {totalaHours}");
+                Console.WriteLine($"Total pages: {totalPages}");
+
+
+                Console.WriteLine(" All BookTypes:");
+                foreach (var book in allTypesofBooks)
+                {
+                    Console.WriteLine($"{book}");
+                }
+
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("No activity yet");
+                Console.ResetColor();
+                Console.ReadLine();
+
+                Console.Clear();
+            }
+
+
+
+
+
+
+        }
+
+        public void SeeOtherHobbiesStats(User user)
+        {
+            var totalOtherHobbiesHours = user.TotalHoursOtherHobbies.Sum();
+            var otherHobbies = user.Activities.OfType<OtherHobbies>().ToList();
+            var allhobies = otherHobbies.Select(name => name.Hobby).ToList();
+
+
+            if (otherHobbies.Count != 0)
+            {
+                Console.WriteLine($"Total seconds spent in your hobbies: {totalOtherHobbiesHours}");
+
+                Console.WriteLine("Hobbies:");
+                foreach (var hobby in allhobies)
+                {
+                    Console.WriteLine(hobby);
+                }
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("No activity yet");
+                Console.ReadLine();
+                Console.ResetColor();
+                Console.Clear();
+            }
+           
+        
+            
+        }
+
+        public void SeeWatchingStats(User user)
+        {
+
+            var watchings = user.Activities.OfType<Watching>().ToList();
+
+            var totalWatchingHours = user.TotalHoursWatching.Sum();
+            var movies = watchings.Where(watching => watching.WatchingType == WatchingType.Movie).Sum(hours => hours.TRackedTime.TotalSeconds);
+            var standup = watchings.Where(watching => watching.WatchingType == WatchingType.StandUp).Sum(hours => hours.TRackedTime.TotalSeconds);
+            var tvshows = watchings.Where(watching => watching.WatchingType == WatchingType.TvShow).Sum(hours => hours.TRackedTime.TotalSeconds);
+
+            if (watchings.Count != 0)
+            {
+                Console.WriteLine($"Total seconds spend {totalWatchingHours} in total");
+                Console.WriteLine($"Just movies: {movies} seconds");
+                Console.WriteLine($"Just standup: {standup} seconds");
+                Console.WriteLine($"Just tvshows: {tvshows} seconds");
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("No activity yet");
+                Console.ReadLine();
+                Console.ResetColor();
+                Console.Clear();
+            }
+
+
+
+            
+         
+
+            
+
+        }
+
+
+
+        public void SeePuzzlesStats(User user)
+        {
+
+            var puzzles = user.Activities.OfType<Puzzles>().ToList();
+            var totalPuzzlesHours = user.TotalHoursPuzzles.Sum();
+            var escapeRoom = puzzles.Where(first => first.PuzzlesType == PuzzlesType.EscapeRoom).Count();
+            var rubikCube = puzzles.Where(first => first.PuzzlesType == PuzzlesType.RubiksCube).Count();
+            var jigsaw = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Jigsaw).Count();
+            var crossword = puzzles.Where(first => first.PuzzlesType == PuzzlesType.Crossword).Count();
+
+
+            if (puzzles.Count != 0)
+            {
+                Console.WriteLine($"total seconds spend {totalPuzzlesHours}");
+                Console.WriteLine("Escape Room :" + escapeRoom);
+                Console.WriteLine("Rubik Cube: " + rubikCube);
+                Console.WriteLine("Jigsaw: " + jigsaw);
+                Console.WriteLine("Crosswords: " + crossword);
+                Console.ReadLine();
+            }
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.Red;
+                Console.WriteLine("No activity yet");
+                Console.ReadLine();
+                Console.ResetColor();
+                Console.Clear();
+            }
+
+          
+
+         //   List<int> vs = new List<int>() { escapeRoom, rubikCube, jigsaw, crossword };
+
+
+
+
+        }
+        public void SeeGeneralStats(User user)
+        {
+
+            var allGeneralHours = user.Activities.Sum(hours => hours.TRackedTime.TotalSeconds);
+
+            Console.WriteLine($" Total time doing all of the activities{allGeneralHours} seconds");
+
+
+
+            var reading = user.Activities.Where(x => x.ActivityType == ActivityType.Reading).Count();
+            var watching = user.Activities.Where(x => x.ActivityType == ActivityType.Watching).Count();
+            var puzzles = user.Activities.Where(x => x.ActivityType == ActivityType.Puzzles).Count();
+            var hobbies = user.Activities.Where(x => x.ActivityType == ActivityType.OtherHobbies).Count();
+
+            Console.WriteLine("Reading: " + reading);
+            Console.WriteLine("Watching: " + watching);
+            Console.WriteLine("Puzzles: " + puzzles);
+            Console.WriteLine("Hobbies: " + hobbies);
+
+            Console.ReadLine();
+
+
+        }
+
+
+
     }
 }

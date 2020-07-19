@@ -8,19 +8,11 @@ namespace TrackingTimeApp.Domain.Entities
 {
     public class Reading : BaseEntity
     {
-
-        public int Pages { get; set; }
-
-        public BookType BookType { get; set; }
-
-        public Reading()
-        {
-            ActivityType = ActivityType.Reading;
-        }
-
-
-
- 
-
+    public int Pages { get; set; }
+    public BookType BookType { get; set; }
+    public Reading()
+    {
+    ActivityType = ActivityType.Reading;
+    }
     }
 }

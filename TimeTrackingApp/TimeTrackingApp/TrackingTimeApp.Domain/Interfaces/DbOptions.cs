@@ -6,8 +6,7 @@ namespace TrackingTimeApp.Domain.Interfaces
 {
     public class DbOptions
     {
-        public string FileDirectory { get; set; }
-
-        public string FileName { get; set; }
+    public string FileDirectory { get; set; }
+    public string FileName { get; set; }
     }
 }

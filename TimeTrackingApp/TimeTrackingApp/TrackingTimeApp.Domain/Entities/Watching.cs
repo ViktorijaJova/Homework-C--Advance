@@ -7,14 +7,10 @@ namespace TrackingTimeApp.Domain.Entities
 {
     public class Watching : BaseEntity
     {
-
-        public WatchingType WatchingType { get; set; }
-        public Watching()
-        {
-            ActivityType = ActivityType.Watching;
-        }
-  
-
-      
+    public WatchingType WatchingType { get; set; }
+    public Watching()
+    {
+    ActivityType = ActivityType.Watching;
+    }  
     }
 }

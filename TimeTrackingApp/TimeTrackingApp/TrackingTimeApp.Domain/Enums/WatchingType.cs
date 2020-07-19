@@ -6,10 +6,8 @@ namespace TrackingTimeApp.Domain.Enums
 {
     public enum WatchingType
     {
-        Movie =1,
-        TvShow = 2,
-        StandUp = 3
-
-
+    Movie =1,
+    TvShow = 2,
+    StandUp = 3
     }
 }
